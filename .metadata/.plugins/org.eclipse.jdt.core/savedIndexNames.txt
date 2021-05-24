@@ -1,0 +1,21 @@
+INDEX VERSION 1.131+C:\myJavaDev\mySpring5-workspace\.metadata\.plugins\org.eclipse.jdt.core
+2421796581.index
+2487545169.index
+3028373682.index
+3531232005.index
+3075953421.index
+1309588450.index
+3620904583.index
+1357899274.index
+1096332659.index
+600267451.index
+2013236620.index
+4241739926.index
+428689436.index
+147288905.index
+1336924316.index
+3235433012.index
+2211017247.index
+3090583398.index
+3202908468.index
+1440695462.index
