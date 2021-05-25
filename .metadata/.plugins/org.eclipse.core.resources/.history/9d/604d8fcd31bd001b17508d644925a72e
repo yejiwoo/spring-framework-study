@@ -1,0 +1,24 @@
+package org.zerock.ex00.domain;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+import lombok.Data;
+
+@Data //롬복, 컴파일 될 때 자동으로 추가 됨 ??
+public class MyBoardVO {
+	
+	private long bno ;
+	private String btitle ;
+	private String bcontent ;
+	private String bwriter ;
+	private int bviewsCnt ; 
+	private int breplyCnt ;
+	private int bdelFlag ;  //0: 유지(N, FALSE), 1: 삭제요청됨(Y, TRUE)
+	private Date bregDate ;
+	private Timestamp bmodDate ;
+
+
+}
+
+
