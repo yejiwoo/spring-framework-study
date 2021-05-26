@@ -10,19 +10,26 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- 이거 없으면 @Controller 사용 못 해 -->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> <!-- ViewResolver를 말하는 거 -->
+		<!-- 컨트롤러가 DispatcherServlet에게 준 값(return "home";)을 뷰리졸버에게 준다. 뷰리졸버에게 준 값에 접두어와 접미어를 붙여서 다시 dispatcher servlet에게 보낸다. dispatcherServlet이 View에게 던져줘서 JSP실행 -->
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.zerock.ex00" />
+	<!-- 자동 빈 등록 -->
+	<!-- context:component-scan base-package
+	: 톰캣 기동 시에 해당 패키지에 @Controller, @Service, @Repository, @Component 어노티에션이 정의된 클래스들이
+	 DispatcherServlet이 사용하는 컨텍스트 영역에 빈으로 생성됩니다.-->
+<!-- <context:component-scan base-package="org.zerock.ex00" /> --> <!-- 기존 내용 주석 처리 -->
+	<context:component-scan base-package="org.zerock.ex00.service" />
+	<context:component-scan base-package="org.zerock.ex00.controller" /> 
 	
-	
-	
+	<context:component-scan base-package="practice.controller" /> 
 </beans:beans>

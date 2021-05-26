@@ -83,5 +83,10 @@
  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	 <property name="dataSource" ref="dataSource"></property>
  </bean> 
+
+<!-- 설정된 패키지에 DAO클래스를 대신하는 매퍼-인터페이스가 있습니다. -->
+<mybatis-spring:scan base-package="org.zerock.ex00.mapper" />
  
 </beans>
+
+

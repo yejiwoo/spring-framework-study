@@ -29,7 +29,10 @@ public interface MyBoardMapper {
 
 	//게시물 삭제(관리자) – 사용자 삭제 요청된 게시물 전체 삭제: bdelFlag = 1
 	public int deleteAllBoardSetDeleted();
+	
 	//게시물 수정
 	public int updateMyBoard(MyBoardVO myBoard);
+	
+
 	
 }

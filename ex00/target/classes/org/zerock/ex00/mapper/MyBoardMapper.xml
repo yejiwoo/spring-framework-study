@@ -32,6 +32,13 @@
 		 DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 </insert>
 
+<!-- 게시물 조회수 증가 : 게시물 조회 시 + 1 -->
+<update id="updateBviewsCnt">
+	 UPDATE book_ex.tbl_myboard
+	 SET bviewsCnt = bviewsCnt + 1
+	 WHERE bno = #{bno} <!-- AND bdelFlag = 0 -->
+</update>
+
 <!-- 게시물 조회 -->
 <select id="selectMyBoard" resultType="org.zerock.ex00.domain.MyBoardVO">
 	 SELECT * FROM book_ex.tbl_myboard
@@ -64,12 +71,7 @@
 	 WHERE bno = #{bno} <!-- AND bdelFlag = 0 -->
 </update>
 
-<!-- 게시물 조회수 증가 : 게시물 조회 시 + 1 -->
-<update id="updateBviewsCnt">
-	 UPDATE book_ex.tbl_myboard
-	 SET bviewsCnt = bviewsCnt + 1
-	 WHERE bno = #{bno} <!-- AND bdelFlag = 0 -->
-</update>
+
 
 <!-- 게시물의 댓글 개수 수정: 댓글추가 시 +1, 댓글삭제 시 -1 -->
 <update id="updateBReplyCnt">

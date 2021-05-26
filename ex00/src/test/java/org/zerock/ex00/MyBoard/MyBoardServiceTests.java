@@ -1,4 +1,6 @@
-package com.spring5212.mypro00.MyBoard;
+package org.zerock.ex00.MyBoard;
+
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import com.spring5212.mypro00.common.paging.MyBoardPagingDTO;
-import com.spring5212.mypro00.service.MyBoardService;
+//import org.zerock.ex00.common.paging.MyBoardPagingDTO;
+import org.zerock.ex00.service.MyBoardService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,6 +21,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MyBoardServiceTests {
 
+	//JUnit은 test클래스에서 setter방식 써야 한다. 생성자 주입 방식은 안 된다.(JUnit의 특징)
 	@Setter(onMethod_ = { @Autowired })
 	private MyBoardService myBoardService;
 		
@@ -39,23 +41,25 @@ public class MyBoardServiceTests {
 ////		this.myBoardService = myBoardService;
 ////	}
 //	
-//	//MyBoardService 빈 생성 유무 확인 테스트
-//	@Test
-//	public void testMyBoardServiceExist() {
-//
-//		log.info(myBoardService);
-//		assertNotNull(myBoardService);
-//	}
-//
-	//게시물 목록 조회 서비스 테스트
+	//MyBoardService 빈 생성 유무 확인 테스트
 	@Test
-	public void testGetBoardList() {
-		//페이징 고려 안함
-		//myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
-		
-		//페이징 고려
-		myBoardService.getBoardList(new MyBoardPagingDTO(2, 10)).forEach(myBoard -> log.info(myBoard));
+	public void testMyBoardServiceExist() {
+
+		log.info("BoardService 빈 생성 확인: "+myBoardService);
+		assertNotNull(myBoardService);
 	}
+//
+	
+	  //게시물 목록 조회 서비스 테스트
+	  
+	  @Test public void testGetBoardList() { 
+		  //페이징 고려 안함
+		  myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
+	  
+		  //페이징 고려 
+//		  myBoardService.getBoardList(new MyBoardPagingDTO(2,0)).forEach(myBoard -> log.info(myBoard)); 
+	  }
+	 
 //
 //	
 //	//게시물 등록: selectKey 이용 테스트

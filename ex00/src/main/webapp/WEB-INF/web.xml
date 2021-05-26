@@ -29,7 +29,7 @@
     <!--<servlet-name>appServlet</servlet-name> -->
     </filter-mapping>
     
-    
+    <!-- 톰캣 구성할 때 같이 구성되는 것 -->
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -44,6 +44,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!--  -->
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
