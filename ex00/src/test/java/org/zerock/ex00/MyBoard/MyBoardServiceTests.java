@@ -1,6 +1,7 @@
 package org.zerock.ex00.MyBoard;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 //import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 import org.zerock.ex00.service.MyBoardService;
 
@@ -51,13 +53,12 @@ public class MyBoardServiceTests {
 //
 	
 	  //게시물 목록 조회 서비스 테스트
-	  
 	  @Test public void testGetBoardList() { 
 		  //페이징 고려 안함
-		  myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
+//		  myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
 	  
 		  //페이징 고려 
-//		  myBoardService.getBoardList(new MyBoardPagingDTO(2,0)).forEach(myBoard -> log.info(myBoard)); 
+		  myBoardService.getBoardList(new MyBoardPagingDTO(2,0)).forEach(myBoard -> log.info(myBoard)); 
 	  }
 	 
 //

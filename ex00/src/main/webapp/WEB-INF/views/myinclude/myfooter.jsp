@@ -15,6 +15,7 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
    <!--  <script>
     $(document).ready(function() {
+    	//Bootstrap의 컬럼 정렬, 페이징 기능 등 DataTable 반응기능 활성화
         $('#dataTables-example').DataTable({
             responsive: true
         });

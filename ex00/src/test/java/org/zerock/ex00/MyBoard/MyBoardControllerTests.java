@@ -39,16 +39,16 @@ public class MyBoardControllerTests {
 //테스트 환경 구성-끝
 	
 //	//게시물 목록 조회 테스트 
-//	@Test
-//	public void testShowBoardList() throws Exception {
-//	
-//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/myboard/list")
-////														.param("pageNum", "2")    //페이징 테스트 시 추가
-////														.param("rowAmount", "10") //페이징 테스트 시 추가
-//						).andReturn()
-//						 .getModelAndView()
-//						 .getModelMap());
-//	}
+	@Test
+	public void testShowBoardList() throws Exception {
+	
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/myboard/list")
+														.param("pageNum", "2")    //페이징 테스트 시 추가
+														.param("rowAmount", "10") //페이징 테스트 시 추가
+						).andReturn()
+						 .getModelAndView()
+						 .getModelMap());
+	}
 //	
 //	//게시물 등록-페이지 호출 테스트
 //	@Test
@@ -62,17 +62,17 @@ public class MyBoardControllerTests {
 //	
 //	
 	//게시물 등록 - 처리 테스트
-	@Test
-	public void testRegisterNewBoard() throws Exception {
-
-		String resultPage = 
-				mockMvc.perform(MockMvcRequestBuilders.post("/myboard/register")
-													  .param("btitle", "게시물 등록 -컨트롤러 테스트 제목")
-													  .param("bcontent", "게시물 등록 -컨트롤러 테스트 내용")
-													  .param("bwriter", "test"))
-					   .andReturn().getModelAndView().getViewName();
-		log.info(resultPage);
-	}
+//	@Test
+//	public void testRegisterNewBoard() throws Exception {
+//
+//		String resultPage = 
+//				mockMvc.perform(MockMvcRequestBuilders.post("/myboard/register")
+//													  .param("btitle", "게시물 등록 -컨트롤러 테스트 제목")
+//													  .param("bcontent", "게시물 등록 -컨트롤러 테스트 내용")
+//													  .param("bwriter", "test"))
+//					   .andReturn().getModelAndView().getViewName();
+//		log.info(resultPage);
+//	}
 //
 //	
 //	//게시물 수정 처리

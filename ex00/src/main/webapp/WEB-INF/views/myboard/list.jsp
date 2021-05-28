@@ -65,6 +65,42 @@
     </tbody>
 </table><!-- /.table-responsive -->
 
+<!-- Pagination 시작 -->
+<div class='pull-right'>
+	 <ul class="pagination pagination-sm">
+		<!-- 페이징 버튼 클릭 시, jQuery로 페이지 번호를 전달하도록 a 태그에 전달된 pagingCreator 객체의 필드 지정 -->
+		 <c:if test="${pagingCreator.prev}"> <!-- true면 아래를 표시 -->
+			 <li class="paginate_button previous">
+			 	<a href="1">&laquo;</a><!-- 맨 앞으로 -->
+			 </li>
+		 </c:if>
+		 <c:if test="${pagingCreator.prev}">
+			 <li class="paginate_button previous">
+			 	<a href="${pagingCreator.startPagingNum - 1}">이전</a>
+			 </li>
+		 </c:if>
+		 <c:forEach var="pageNum" begin="${pagingCreator.startPagingNum}" end="${pagingCreator.endPagingNum}">
+			 <!-- 선택된 숫자의 경우, Bootstrap의 active 클래스 이름 추가 -->
+			 <li class="paginate_button">
+				 <li class='paginate_button ${pagingCreator.myBoardPagingDTO.pageNum == pageNum ? "active":"" }'>
+				 <a href="${pageNum}">${pageNum}</a>
+			 </li>
+		 </c:forEach>
+		 <c:if test="${pagingCreator.next}">
+			 <li class="paginate_button next">
+			 	<a href="${pagingCreator.endPagingNum +1}">다음</a>
+			 </li>
+		 </c:if>
+		 <c:if test="${pagingCreator.next}">
+			 <li class="paginate_button next">
+			 	<a href="${pagingCreator.lastPageNum}">&raquo;</a>
+			 </li>
+		 </c:if> 
+	 </ul>
+</div>
+<!-- Pagination 끝 -->
+
+
                 </div><!-- /.panel-body -->
             </div><!-- /.panel -->
         </div><!-- /.col-lg-12 -->
@@ -72,6 +108,9 @@
 </div><!-- /#page-wrapper -->
 
 <form id="frmSendValue">
+	 <input type='hidden' name='pageNum' value='${pagingCreator.myBoardPagingDTO.pageNum}'>
+	 <input type='hidden' name='rowAmountPerPage' value='${pagingCreator.myBoardPagingDTO.rowAmountPerPage}'>
+	 <input type='hidden' name='lastPageNum' value='${pagingCreator.lastPageNum}'>
 </form>
 
 
@@ -101,9 +140,55 @@ $(".moveDetail").on( "click", function(e) {
 	frmSendValue.submit();
 });
 
+
+
+<%-- (11장: 모달 호출 및 모달을 통한 페이지 이동 문제해결) JQeury 메소드 --%>
+//모달을 통한 뒤로가기 비활성화 코드
+
+//popstate 이벤트를 처리하는 리스너 추가
+window.addEventListener('popstate', function(event){
+	history.pushState(null, null, location.href); //다시 push함으로 뒤로가기 Block
+})
+
+//컨트롤러가 전달한 result값을 변수에 저장
+var result='<c:out value="${result}"/>';
+
+function checkModal(result){
+	if(result==="|| history.state){
+		return;
+	}else if(result ==='successModify'){
+		var myMsg="글이 수정되었습니다.";
+	}else if(result ==='successRemove'){
+		var myMsg="글이 삭제되었습니다.";
+	}else if(parseInt(result)>0){
+		var myMsg="게시글"+parseInt(result)+"번이 등록 되었습니다.";
+	}
+	$(".modal-body").html(myMsg);
+	$("#myModal").modal("show");
+	myMsg=";
+}
+
+$(".paginate_button a").on( "click", function(e) {
+	 e.preventDefault(); //a 태그의 동작 막음
+	 alert("페이징번호 클릭함");
+	 //폼에 저장된 현재 화면의 페이지번호를 클릭한 페이징 버튼의 페이지번호로 변경
+	 frmSendValue.find("input[name='pageNum']").val($(this).attr("href"));
+	 frmSendValue.attr("action", "${contextPath}/myboard/list");
+	 frmSendValue.attr("method", "get");
+	 frmSendValue.submit();
+});
+
+ c
+//모달 표시 유무 결정/모달에 표시할 내용 수정/모달 표시 실행
+$(document).ready(function(){
+	//아래에 선언된 메소드 실행
+	checkModal(result);
+	
+	//현재 목록페이지 URL을 강제로 최근URL로 히스토리 객체에 추가
+	history.pushState(null, null, locatioin.href);
+})
+
 </script>
-
-
 
 
 <%@ include file="../myinclude/myfooter.jsp" %> 

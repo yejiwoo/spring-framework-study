@@ -55,6 +55,10 @@
     <button type="button" id="btnRemove" data-oper="remove" class="btn btn-danger">삭제</button>
     <button type="button" id="btnList" data-oper="list" class="btn btn-info">취소</button>
 
+	<%-- 추가 --%>
+	<input type='hidden' name='pageNum' value='${myBoardPagingDTO.pageNum}'>
+	 <input type='hidden' name='rowAmountPerPage' value='${myBoardPagingDTO.rowAmountPerPage}'>
+ 
 </form>
 
                 </div><!-- /.panel-body -->
