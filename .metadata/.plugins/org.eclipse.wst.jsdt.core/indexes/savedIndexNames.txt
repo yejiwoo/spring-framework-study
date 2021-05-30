@@ -1,4 +1,5 @@
-INDEX VERSION 1.4+C:\myJavaDev\mySpring5-workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3271193799.index
-1823557430.index
-2487545169.index
+INDEX VERSION 1.4+C:\myJavaDev\spring-framework-study\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2903402151.index
+1807315899.index
+3891474673.index
+1781838130.index
