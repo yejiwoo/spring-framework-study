@@ -1,4 +1,4 @@
-package org.yejiwoo.sample.MyBoard;
+package org.zerock.ex00.MyBoard;
 
 import static org.junit.Assert.assertNotNull;
 
