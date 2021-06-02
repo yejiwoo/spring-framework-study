@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- myBatis SQL-매퍼 파일임을 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="org.yejiwoo.sample.mapper.MyBoardMapper">
+ 
+<!-- 각 태그의 id에 설정하는 값은, 이 SQL문을 사용하는 메퍼-인터페이스의 해당 메소드 이름과 동일해야 함 -->
+
+<!-- 게시물 조회 - 목록 -->
+ <select id="selectMyBoardList" resultType="org.yejiwoo.sample.domain.MyBoardVO">
+ 	SELECT * FROM book_ex.tbl_myboard
+ 	WHERE bno > 0 AND bdelFlag=0
+ 	ORDER BY bno DESC
+ </select>
+ </mapper>
