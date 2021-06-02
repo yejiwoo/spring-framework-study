@@ -30,7 +30,7 @@ public class MyBoardControllerTests {
 	@Setter(onMethod_ = { @Autowired })
 	private WebApplicationContext ctx;
 
-	private MockMvc mockMvc; // 가상 MVC 환경
+	private MockMvc mockMvc;
 
 	@Before
 	public void setup() {
@@ -38,7 +38,7 @@ public class MyBoardControllerTests {
 	}
 //테스트 환경 구성-끝
 	
-//	//게시물 목록 조회 테스트 
+	//게시물 목록 조회 테스트 
 	@Test
 	public void testShowBoardList() throws Exception {
 	
@@ -61,7 +61,7 @@ public class MyBoardControllerTests {
 //	}
 //	
 //	
-	//게시물 등록 - 처리 테스트
+//	//게시물 등록 처리 테스트
 //	@Test
 //	public void testRegisterNewBoard() throws Exception {
 //
@@ -96,14 +96,14 @@ public class MyBoardControllerTests {
 //	@Test
 //	public void testshowBoardDetail() throws Exception {
 // 
-//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/myboard/detail")
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/myboard/modify")
 //													   .param("bno", "1"))
 //						.andReturn()
 //						.getModelAndView()
 //						.getModelMap());
 //	}
-//
-//	//게시물 삭제 테스트- By 사용자: 실제 삭제는 안됨: bno를 "4", "5" 로 두 번 수행
+
+	//게시물 삭제 테스트- By 사용자: 실제 삭제는 안됨: bno를 "4", "5" 로 두 번 수행
 //	@Test
 //	public void testSetBoardDeleted() throws Exception {
 //

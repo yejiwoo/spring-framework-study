@@ -8,17 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-<<<<<<< HEAD
-import org.yejiwoo.sample.common.paging.MyReplyPagingCreatorDTO;
-import org.yejiwoo.sample.common.paging.MyReplyPagingDTO;
-import org.yejiwoo.sample.domain.MyReplyVO;
-import oorg.yejiwoo.sample.service.MyReplyService;
-=======
 import org.zerock.ex00.common.paging.MyReplyPagingCreatorDTO;
 import org.zerock.ex00.common.paging.MyReplyPagingDTO;
 import org.zerock.ex00.domain.MyReplyVO;
 import org.zerock.ex00.service.MyReplyService;
->>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

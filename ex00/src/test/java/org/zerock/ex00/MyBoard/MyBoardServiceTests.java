@@ -1,7 +1,6 @@
 package org.zerock.ex00.MyBoard;
 
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.zerock.ex00.common.paging.MyBoardPagingDTO;
-//import org.zerock.ex00.common.paging.MyBoardPagingDTO;
+import org.zerock.ex00.domain.MyBoardVO;
 import org.zerock.ex00.service.MyBoardService;
 
 import lombok.Setter;
@@ -23,7 +21,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MyBoardServiceTests {
 
-	//JUnit은 test클래스에서 setter방식 써야 한다. 생성자 주입 방식은 안 된다.(JUnit의 특징)
 	@Setter(onMethod_ = { @Autowired })
 	private MyBoardService myBoardService;
 		
@@ -47,20 +44,17 @@ public class MyBoardServiceTests {
 	@Test
 	public void testMyBoardServiceExist() {
 
-		log.info("BoardService 빈 생성 확인: "+myBoardService);
+		log.info("BoardService빈 생성 확인" + myBoardService);
 		assertNotNull(myBoardService);
 	}
-//
-	
-	  //게시물 목록 조회 서비스 테스트
-	  @Test public void testGetBoardList() { 
-		  //페이징 고려 안함
-//		  myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
-	  
-		  //페이징 고려 
-		  myBoardService.getBoardList(new MyBoardPagingDTO(2,0)).forEach(myBoard -> log.info(myBoard)); 
-	  }
-	 
+
+	//게시물 목록 조회 서비스 테스트
+	@Test
+	public void testGetBoardList() {
+		//페이징 고려 안함
+		myBoardService.getBoardList().forEach(myBoard -> log.info(myBoard));
+		
+	}
 //
 //	
 //	//게시물 등록: selectKey 이용 테스트
@@ -95,7 +89,7 @@ public class MyBoardServiceTests {
 //	public void testGetBoard() {
 //		log.info(myBoardService.getBoard(1L));
 //	}
-//
+
 //	
 //	//게시물 삭제  테스트- By 사용자: bdelFlag 컬럼만 1로 수정
 //	@Test

@@ -1,4 +1,5 @@
-package org.zerock.ex00.mapper;
+package com.spring5212.mypro00.mapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

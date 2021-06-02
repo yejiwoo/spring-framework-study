@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ex01</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>ex01 페이지 입니다~~~</h1>
+	
 </body>
 </html>

@@ -1,6 +1,3 @@
-/**
- * 데이터베이스 접속 및 MyBatis의 SqlSession 객체 생성 테스트
- */
 package org.zerock.ex00.datasource;
 
 import static org.junit.Assert.fail;
@@ -25,7 +22,6 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/mybatis-context.xml")
-
 //Java 자바설정을 사용하는 경우 
 //@ContextConfiguration(classes= {RootConfig.class})
 @Log4j

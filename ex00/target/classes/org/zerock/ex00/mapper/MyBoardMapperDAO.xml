@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MyBoardMapperDAO">
+
+<!-- 게시물 목록 조회(페이징, 검색): 삭제 요청된 행 포함  -->
+
+ 	<select id="selectMyBoardList" 
+ 	        parameterType="org.zerock.ex00.common.paging.MyBoardPagingDTO" 
+ 	        resultType="org.zerock.ex00.domain.MyBoardVO">
+	<![CDATA[
+		SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+		FROM ( SELECT /*+ INDEX_DESC (a pk_myboard) */ ROWNUM rn, a.*
+			   FROM  book_ex.tbl_myboard a
+			   WHERE 
+	]]>
+	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach item='scope' collection="scopeArray">
+			<trim prefix="OR">
+				<choose>
+					<when test="scope == 'T'.toString()">
+						btitle LIKE '%'||#{keyword}||'%'
+					</when>
+					<when test="scope == 'C'.toString()">
+						bcontent LIKE '%'||#{keyword}||'%'
+					</when>
+					<when test="scope == 'W'.toString()">
+						bwriter LIKE '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+	
+	<![CDATA[
+			ROWNUM <= #{pageNum} * #{rowAmountPerPage}
+			)
+		WHERE rn >= ( ( #{pageNum} * #{rowAmountPerPage} ) - ( #{rowAmountPerPage} - 1 ) )  
+	]]> 
+	</select>
+
+
+<!-- 게시물 조회 - 총 게시물 개수(페이징, 검색고려): 삭제 요청된 행 포함 -->
+<select id="selectRowAmountTotal" 
+        parameterType="org.zerock.ex00.common.paging.MyBoardPagingDTO"  
+        resultType="Long">
+	<![CDATA[
+		SELECT count(*) FROM book_ex.tbl_myboard 
+		  
+	]]>
+		<where>
+			<trim prefix="(" suffix=")" prefixOverrides="OR">
+				<foreach item='scope' collection="scopeArray">
+					<trim prefix="OR">
+						<choose>
+							<when test="scope == 'T'.toString()">
+								btitle LIKE '%'||#{keyword}||'%'
+							</when>
+							<when test="scope == 'C'.toString()">
+								bcontent LIKE '%'||#{keyword}||'%'
+							</when>
+							<when test="scope == 'W'.toString()">
+								bwriter LIKE '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>	
+		</where>
+	</select>
+
+
+<!-- 게시물 등록2 - selectKey 이용 -->
+    <insert id="insertMyBoardSelectKey" parameterType="org.zerock.ex00.domain.MyBoardVO">
+        <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+            SELECT book_ex.seq_myboard.nextval FROM dual
+        </selectKey>
+        
+        INSERT INTO book_ex.tbl_myboard
+        VALUES (#{bno},	#{btitle}, #{bcontent}, #{bwriter},
+        DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+</mapper>
