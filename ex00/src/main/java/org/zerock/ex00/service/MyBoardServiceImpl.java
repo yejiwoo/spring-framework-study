@@ -3,13 +3,13 @@ package org.zerock.ex00.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
+import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 import org.zerock.ex00.domain.MyBoardVO;
 import org.zerock.ex00.mapper.MyBoardMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-
+	
 @Log4j
 @Service
 @AllArgsConstructor
@@ -24,12 +24,26 @@ public class MyBoardServiceImpl implements MyBoardService {
 	
 	
 	//게시물 목록 조회 서비스1
-	@Override
-	public List<MyBoardVO> getBoardList(){
-		log.info("MyBoardService.getBoardList() 실행");
-		return myBoardMapper.selectMyBoardList();
-	}
+//	@Override
+//	public List<MyBoardVO> getBoardList(){
+//		log.info("MyBoardService.getBoardList() 실행");
+//		return myBoardMapper.selectMyBoardList();
+//	}
 	
+	//게시물 목록 조회 서비스2 - 페이징 고려
+		@Override
+		public List<MyBoardVO> getBoardList(MyBoardPagingDTO myBoardPagingDTO){
+			System.out.println("MyBoardService.getBoardList() 실행");
+			return myBoardMapper.selectMyBoardList(myBoardPagingDTO);
+		}
+		
+		//게시물 총 개수 조회 서비스 - 페이징 시 필요
+		@Override
+		public Long getRowAmountTotal(MyBoardPagingDTO myBoardPagingDTO) {
+			log.info("MyBoardService.getRowAmountTotal()에 전달된 MyBoardPagingDTO: " + myBoardPagingDTO);
+			return myBoardMapper.selectRowAmountTotal(myBoardPagingDTO);
+		}
+
 	//게시물 등록:selectKey이용
 	@Override
 	public long registerBoard(MyBoardVO myBoard) {

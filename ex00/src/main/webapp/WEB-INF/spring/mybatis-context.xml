@@ -26,6 +26,7 @@
 	 	<value>/WEB-INF/config/jdbc.properties</value>
 	 </property>
  </bean> -->
+ 
 <!-- 위의 빈 사용을 대체방법(Spring 5 이후) -->
  <!-- <context:property-placeholder location="/WEB-INF/jdbcConfig/jdbc.properties"/> -->
 <context:property-placeholder location="classpath:jdbcConfig/jdbc.properties"/>
@@ -82,6 +83,16 @@
 
  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	 <property name="dataSource" ref="dataSource"></property>
+	 <!-- 
+		<property name="configLocation" 
+		          value="classpath:org/zerock/ex00/mapper/mybatisConfig.xml"/> -->
+	
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:org/zerock/ex00/mapper/MyBoardMapper.xml</value>
+			</list>
+		</property>
+		
  </bean> 
 
 <!-- 설정된 패키지에 DAO클래스를 대신하는 매퍼-인터페이스가 있습니다. -->

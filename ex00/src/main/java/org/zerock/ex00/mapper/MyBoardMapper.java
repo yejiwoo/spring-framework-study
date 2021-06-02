@@ -2,13 +2,21 @@ package org.zerock.ex00.mapper;
 
 import java.util.List;
 
+import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 import org.zerock.ex00.domain.MyBoardVO;
 
 public interface MyBoardMapper {
 
 	//게시물 조회 - 목록
-	public List<MyBoardVO> selectMyBoardList();
+//	public List<MyBoardVO> selectMyBoardList();
 
+	//게시물 조회 - 목록 2: 페이징 고려
+	public List<MyBoardVO> selectMyBoardList(MyBoardPagingDTO myBoardPagingDTO);
+	
+	//게시물 조회 - 총 게시물 개수(페이징 데이터)
+    public Long selectRowAmountTotal(MyBoardPagingDTO myBoardPagingDTO);
+    //public Long selectRowAmountTotal();
+    
 	//게시물 등록1 - selectKey 이용 안 함
 	public Integer insertMyBoard(MyBoardVO myBoard);
 

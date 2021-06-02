@@ -4,17 +4,65 @@
  
  <mapper namespace="org.zerock.ex00.mapper.MyBoardMapper">
  
- <!-- 각 태그의 id에 설정하는 값은, 이 SQL문을 사용하는 메퍼-인터페이스의 해당 메소드 이름과 동일해야 함 -->
-<!-- 게시물 조회 - 목록 -->
-<select id="selectMyBoardList" resultType="org.zerock.ex00.domain.MyBoardVO">
-	<![CDATA[
-		 SELECT * FROM book_ex.tbl_myboard
-		 WHERE bno > 0
-		 AND bdelFlag = 0
-		 ORDER BY bno DESC
-	]]>
-</select>
+<!-- 각 태그의 id에 설정하는 값은, 이 SQL문을 사용하는 메퍼-인터페이스의 해당 메소드 이름과 동일해야 함 -->
 
+<!-- 게시물 조회 - 목록 -->
+<!-- <select id="selectMyBoardList" resultType="org.zerock.ex00.domain.MyBoardVO">
+<![CDATA[
+	 SELECT * FROM book_ex.tbl_myboard
+	 WHERE bno > 0
+	 AND bdelFlag = 0
+	 ORDER BY bno DESC
+]]>
+</select>
+ -->
+ 
+<!--  게시물 조회 - 목록2: 페이징 고려: 삭제 요청된 행 제외 -->
+<!--
+<select id="selectMyBoardList" resultType="org.zerock.ex00.domain.MyBoardVO">
+<![CDATA[
+	SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+	FROM ( SELECT /*+ INDEX_DESC (a pk_myboard) */ ROWNUM rn, a.*
+		   FROM  book_ex.tbl_myboard a
+		   WHERE bno > 0 AND bdelFlag = 0 AND ROWNUM <= ( #{pageNum} * #{rowAmountPerPage} )
+		 )
+	WHERE rn >= ( ( #{pageNum} * #{rowAmountPerPage} ) - ( #{rowAmountPerPage} - 1 ) )
+]]>
+</select>
+--> 
+
+<!-- 게시물 조회 - 총 게시물 개수(페이징 데이터): 삭제 요청된 행 제외 -->
+<!-- 아래 문장 사용 시, bdelFlag, bno를 키로 가지는 인덱스 추가 요망(성능) -->
+<!-- 
+<select id="selectRowAmountTotal" resultType="Long">
+<![CDATA[
+	SELECT count(*) FROM book_ex.tbl_myboard 
+	WHERE bno > 0 AND bdelFlag = 0
+]]>
+</select>
+-->
+
+<!-- 게시물 조회 - 목록2: 페이징 고려: 삭제 요청된 행 포함 -->
+<select id="selectMyBoardList" resultType="org.zerock.ex00.domain.MyBoardVO">
+<![CDATA[
+	SELECT bno, btitle, bcontent, bwriter, bregdate, bmodDate, bviewsCnt, breplyCnt, bdelFlag
+	FROM ( SELECT /*+ INDEX_DESC (a pk_myboard) */ ROWNUM rn, a.*
+                       FROM  book_ex.tbl_myboard a
+		WHERE ROWNUM <= ( #{pageNum} * #{rowAmountPerPage} )
+	     )
+	WHERE rn >= ( ( #{pageNum} * #{rowAmountPerPage} ) - ( #{rowAmountPerPage} - 1 ) )
+]]>
+	</select>
+
+
+<!-- 게시물 조회 - 총 게시물 개수(페이징 데이터): 삭제 요청된 행 포함 -->
+<select id="selectRowAmountTotal" resultType="Long">
+<![CDATA[
+	SELECT count(*) FROM book_ex.tbl_myboard 
+]]>
+</select>
+	
+	
 <!-- 게시물 등록1 - selectKey 이용않함 -->
 <insert id="insertMyBoard">
 	 INSERT INTO book_ex.tbl_myboard
@@ -32,6 +80,7 @@
 		 DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 </insert>
 
+	
 <!-- 게시물 조회수 증가 : 게시물 조회 시 + 1 -->
 <update id="updateBviewsCnt">
 	 UPDATE book_ex.tbl_myboard

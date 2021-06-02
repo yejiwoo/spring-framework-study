@@ -1,4 +1,4 @@
-package com.spring5212.mypro00.MyBoard;
+package org.zerock.ex00.MyBoard;
 
 import org.junit.Before;
 import org.junit.Test;

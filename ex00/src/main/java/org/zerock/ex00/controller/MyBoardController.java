@@ -34,11 +34,11 @@ public class MyBoardController {
 
 	//게시물 목록 조회 2 - 페이징 고려
 	@GetMapping("/list")
-	public void showBoardList(MyBoardPagingDTO myBoardPagingDTO,Model model) {
+	public void showBoardList(MyBoardPagingDTO myBoardPagingDTO, Model model) {
 		log.info("컨트롤러 - 게시물 목록 조회......");
 		log.info("컨트롤러에 전달된 사용자의 페이징처리 데이터: "+myBoardPagingDTO);
 		model.addAttribute("boardList",myBoardService.getBoardList(myBoardPagingDTO));
-	
+		
 		Long rowAmountTotal = myBoardService.getRowAmountTotal(myBoardPagingDTO);
 		log.info("컨트롤러에 전달된 게시물 총 개수: "+ rowAmountTotal);
 		
@@ -122,24 +122,24 @@ public class MyBoardController {
     }
     
   //게시물 삭제 - By 사용자: 실제 삭제는 안됨
-    @Override
-    @PostMapping("/delete")
-    public String setBoardDeleted(@RequestParam("bno") Long bno,
-	    MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
-	    RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
-    	
-	    log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
-	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
-	
-	    if (myBoardService.setBoardDeleted(bno)) {
-	    	redirectAttr.addFlashAttribute("result", "success");
-	    }
-	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
-	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
-	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
-	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
-	    return "redirect:/myboard/list";
-    } 
+//    @Override
+//    @PostMapping("/delete")
+//    public String setBoardDeleted(@RequestParam("bno") Long bno,
+//	    MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+//	    RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+//    	
+//	    log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
+//	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
+//	
+//	    if (myBoardService.setBoardDeleted(bno)) {
+//	    	redirectAttr.addFlashAttribute("result", "success");
+//	    }
+//	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+//	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+//	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+//	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
+//	    return "redirect:/myboard/list";
+//    } 
 
     
     
