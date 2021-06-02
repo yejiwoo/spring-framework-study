@@ -51,15 +51,35 @@ public class MyReplyServiceImpl  implements MyReplyService {
 
 	 log.info("댓글-서비스-게시물에 대한 댓글 목록 조회 - 전달된 MyReplyPagingDTO: " + myReplyPaging);
 
-	 MyReplyPagingCreatorDTO myReplyPagingCreator =
+	 int replyTotalByBno = myReplyMapper.selectReplyTotalByBno(myReplyPaging);
+	 
+	 Integer pageNum = myReplyPaging.getPageNum();
+	 
+	 if (replyTotalByBno == 0) {
+	 myReplyPaging.setPageNum(1);
+	 log.info("댓글-서비스- 댓글이 없는 경우, pageNum은 1: 수정된 myReplyPaging: " + myReplyPaging);
 
+	 MyReplyPagingCreatorDTO myReplyPagingCreator =
+	 new MyReplyPagingCreatorDTO(replyTotalByBno, myReplyPaging, null);
+
+	 return myReplyPagingCreator ;
+
+	 } else { 
+	 if (pageNum == -1) {
+	 pageNum = (int) Math.ceil(replyTotalByBno/(myReplyPaging.getRowAmountPerPage()*1.0));
+	 myReplyPaging.setPageNum(pageNum);
+	 log.info("댓글-서비스-댓글추가 후, 마지막 댓글 페이지로 이동(myReplyPaging): " + myReplyPaging);
+	 }
+
+	 MyReplyPagingCreatorDTO myReplyPagingCreator =
 	 new MyReplyPagingCreatorDTO(
 	 myReplyMapper.selectReplyTotalByBno(myReplyPaging),
-	 myReplyPaging,
-	 myReplyMapper.selectMyReplyList(myReplyPaging));
+	myReplyPaging,
+	myReplyMapper.selectMyReplyList(myReplyPaging));
 	 log.info("댓글-서비스-게시물에 대한 댓글 목록 조회 - 생성된 myReplyPagingCreatorDTO: " + myReplyPagingCreator);
-	 log.info("댓글-서비스-게시물에 대한 댓글 목록 조회 - myReplyPagingCreator 가 컨트롤러로 전달됨");
+	 log.info("댓글-서비스-게시물에 대한 댓글 목록 조회 - myReplyPagingCreator가 컨트롤러로 전달됨");
 	 return myReplyPagingCreator;
+	 }
 	 }
 
 	//특정 게시물의 댓글 총 개수확인
