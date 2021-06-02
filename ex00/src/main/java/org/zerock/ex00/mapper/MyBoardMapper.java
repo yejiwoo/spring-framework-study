@@ -4,11 +4,23 @@ import java.util.List;
 
 import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 import org.zerock.ex00.domain.MyBoardVO;
+import org.zerock.ex00.common.paging.MyBoardPagingDTO;
 
 public interface MyBoardMapper {
 
+<<<<<<< HEAD
 	//게시물 조회 - 목록
 //	public List<MyBoardVO> selectMyBoardList();
+=======
+	//게시물 조회 - 목록1
+//	public List<MyBoardVO> selectMyBoardList();
+	
+	//게시물 조회 - 목록 2: 페이징 고려
+	public List<MyBoardVO> selectMyBoardList(MyBoardPagingDTO myBoardPagingDTO);
+	
+	//게시물 조회 - 총 게시물 개수(페이징데이터)
+	public Long selectRowAmountTotal(MyBoardPagingDTO myBoardPagingDTO);
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 
 	//게시물 조회 - 목록 2: 페이징 고려
 	public List<MyBoardVO> selectMyBoardList(MyBoardPagingDTO myBoardPagingDTO);
@@ -41,6 +53,7 @@ public interface MyBoardMapper {
 	//게시물 수정
 	public int updateMyBoard(MyBoardVO myBoard);
 	
-
+	//게시물 댓글 수 증가
+	public void updateBReplyCnt(Long bno, int n);
 	
 }

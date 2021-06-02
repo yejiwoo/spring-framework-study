@@ -34,7 +34,11 @@ public class MyBoardController {
 
 	//게시물 목록 조회 2 - 페이징 고려
 	@GetMapping("/list")
+<<<<<<< HEAD
 	public void showBoardList(MyBoardPagingDTO myBoardPagingDTO, Model model) {
+=======
+	public void showBoardList(MyBoardPagingDTO myBoardPagingDTO,Model model) {
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 		log.info("컨트롤러 - 게시물 목록 조회......");
 		log.info("컨트롤러에 전달된 사용자의 페이징처리 데이터: "+myBoardPagingDTO);
 		model.addAttribute("boardList",myBoardService.getBoardList(myBoardPagingDTO));
@@ -122,6 +126,7 @@ public class MyBoardController {
     }
     
   //게시물 삭제 - By 사용자: 실제 삭제는 안됨
+<<<<<<< HEAD
 //    @Override
 //    @PostMapping("/delete")
 //    public String setBoardDeleted(@RequestParam("bno") Long bno,
@@ -140,6 +145,25 @@ public class MyBoardController {
 //	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
 //	    return "redirect:/myboard/list";
 //    } 
+=======
+    @PostMapping("/delete")
+    public String setBoardDeleted(@RequestParam("bno") Long bno,
+    		MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+    		RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+    	
+	    log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
+	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
+	
+	    if (myBoardService.setBoardDeleted(bno)) {
+	    	redirectAttr.addFlashAttribute("result", "success");
+	    }
+	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
+	    return "redirect:/myboard/list";
+    } 
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 
     
     

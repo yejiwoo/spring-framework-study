@@ -29,6 +29,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 //		log.info("MyBoardService.getBoardList() 실행");
 //		return myBoardMapper.selectMyBoardList();
 //	}
+<<<<<<< HEAD
 	
 	//게시물 목록 조회 서비스2 - 페이징 고려
 		@Override
@@ -44,6 +45,23 @@ public class MyBoardServiceImpl implements MyBoardService {
 			return myBoardMapper.selectRowAmountTotal(myBoardPagingDTO);
 		}
 
+=======
+	
+	//게시물 목록 조회 서비스 2 - 페이징 고려
+	@Override
+	public List<MyBoardVO> getBoardList(MyBoardPagingDTO myBoardPagingDTO){
+		log.info("MyBoardService.getBoardList() 실행");
+		return myBoardMapper.selectMyBoardList(myBoardPagingDTO);
+	}
+	
+	//게시물 총 개수 조회 서비스 - 페이징 시 필요
+	@Override
+	public Long getRowAmountTotal(MyBoardPagingDTO myBoardPagingDTO) {
+		log.info("MyBoardService.getRowAmountTotal()에 전달된 MyBOardPagingDTO: "+myBoardPagingDTO);
+		return myBoardMapper.selectRowAmountTotal(myBoardPagingDTO);
+	};
+		
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 	//게시물 등록:selectKey이용
 	@Override
 	public long registerBoard(MyBoardVO myBoard) {

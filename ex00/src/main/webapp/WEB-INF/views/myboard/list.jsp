@@ -8,6 +8,7 @@
 
 <%@ include file="../myinclude/myheader.jsp" %> 
 
+<<<<<<< HEAD
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12"><h3 class="page-header">Board - List</h3></div><!-- /.col-lg-12 -->
@@ -135,11 +136,158 @@
     <input type='hidden' name='lastPageNum' value='${pagingCreator.lastPageNum}'>
 </form>
 
+=======
+<div class="row">
+	<div class="col-lg-12">
+	 	<h3 class="page-header">User Board</h3>
+	</div><!-- /.col-lg-12 -->
+</div><!-- /.row -->
+
+ <div class="row">
+     <div class="col-lg-12">
+         <div class="panel panel-default">
+             <div class="panel-heading">
+				<div class="row">
+					<div class="col-md-6" style="font-size:18px; height: 45px; padding-top:14px;">게시글 목록</div>
+					<div class="col-md-6" style="height: 47px; padding-top:8px;">
+						<button type="button" id="btnMoveRegister" class="btn btn-primary btn-sm pull-right">새글 등록</button>
+					</div>
+				</div>
+             </div><!-- /.panel-heading -->
+             
+         	<div class="panel-body">
+
+				<%-- 목록 화면에서 상세 페이지 이동(방법2, 3에서), 페이징 화면 이동, 검색 결과의 페이징 이동 시에 사용됨 --%> 
+				<%-- 표시 행수/검색유형/검색어 입력 form 시작 --%>
+				<form class="form-inline" id="frmSendValue" action="${contextPath}/myboard/list" method="get">
+					 <div class="form-group">
+						 <label class="sr-only">frmSendValues</label>
+						
+						 <select class="form-control" id="selectAmount" name="rowAmountPerPage">
+							 <option value="10" <c:out value="${pagingCreator.myBoardPagingDTO.rowAmountPerPage eq '10'? 'selected' : ''}"/>>10개</option>
+							 <option value="20" <c:out value="${pagingCreator.myBoardPagingDTO.rowAmountPerPage eq '20'? 'selected' : ''}"/>>20개</option>
+							 <option value="50" <c:out value="${pagingCreator.myBoardPagingDTO.rowAmountPerPage eq '50'? 'selected' : ''}"/>>50개</option>
+							 <option value="100" <c:out value="${pagingCreator.myBoardPagingDTO.rowAmountPerPage eq '100'? 'selected' : ''}"/>>100개</option>
+						 </select>
+						
+						 <select class="form-control" id="selectScope" name="scope">
+							 <option value="" <c:out value="${pagingCreator.myBoardPagingDTO.scope == null ? 'selected':''}"/>>검색범위</option>
+							 <option value="T" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'T'? 'selected' : ''}"/>>제목</option>
+							 <option value="C" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'C'? 'selected' : ''}"/>>내용</option>
+							 <option value="W" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'W'? 'selected' : ''}"/>>작성자</option>
+							 <option value="TC" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'TC'? 'selected' : ''}"/>>제목 + 내용</option>
+							 <option value="TW" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'TW'? 'selected' : ''}"/>>제목 + 작성자</option>
+							 <option value="TCW" <c:out value="${pagingCreator.myBoardPagingDTO.scope eq 'TCW'? 'selected' : ''}"/>>제목 + 내용 + 작성자</option>
+						 </select>
+						
+						 <div class="input-group">
+							 <input class="form-control" id="inputKeyword" name="keyword" type="text"
+									 placeholder="검색어를 입력하세요" value='<c:out value="${pagingCreator.myBoardPagingDTO.keyword}"/>' />
+							 <span class="input-group-btn">
+								 <button class="btn btn-info" type="button" id="btnSearchGo">
+								 			검색 &nbsp;<i class="fa fa-search"></i>
+								 </button>
+							 </span>
+						 </div>
+						
+						 <div class="input-group">
+							 <button id="btnReset" class="btn btn-warning" type="reset">검색초기화</button>
+						 </div>
+					 </div><%-- /.form-group --%>
+					 <input type='hidden' name='pageNum' value='${pagingCreator.myBoardPagingDTO.pageNum}'>
+					 <input type='hidden' name='lastPageNum' value='${pagingCreator.lastPageNum}'>
+				</form> 
+		
+				<%-- END 검색범위 및 검색어 입력 폼 --%>
+				
+				<br>
+				
+				<%--게시물 목록 표시 테이블 시작 --%>
+				<table class="table table-striped table-bordered table-hover" 
+				       style="width:100%;text-align:center;">
+				    <thead>
+				        <tr>
+				            <th style="text-align:center">번호</th>
+				            <th style="text-align:center">제목</th>
+				            <th style="text-align:center">작성자</th>
+				            <th style="text-align:center">작성일</th>
+				            <th style="text-align:center">수정일</th>
+				            <th style="text-align:center">조회수</th>
+				        </tr>
+				    </thead>
+				    <tbody>       
+						<c:forEach items="${boardList}" var="board"><%-- 컨트롤러에서 보낸 목록객체 이름: boardList --%>
+						    <c:if test="${board.bdelFlag == 1}">
+						        <tr style="background-color:Moccasin; text-align:center">
+						            <td><c:out value="${board.bno}" /></td>
+						            <td colspan="5"><em>작성자에 의하여 삭제된 게시글입니다.</em></td>
+						        </tr>
+						    </c:if>
+						    <c:if test="${board.bdelFlag == 0}">
+						    	<%--상세 페이지 이동 - 방법3: tr에서 data-bno 속성과 폼, jQuery 이용 --%>
+						        <tr class="moveDetail" data-bno='<c:out value="${board.bno}"/>'>
+						            <td><c:out value="${board.bno}" /></td>
+						            <td style="text-align:left;" ><c:out value="${board.btitle}"/></td>
+						            <td><c:out value="${board.bwriter}" /></td>
+						            <td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.bregDate}" /><br>
+						                <%-- ${board.bregDate} --%>
+						            </td>
+						            <td><fmt:formatDate pattern="yyyy/MM/dd HH:mm:ss" value="${board.bmodDate}" /><br>
+						                <%-- ${board.bmodDate} --%>
+						            </td>
+						            <td>${board.bviewsCnt}</td>
+						        </tr>
+						    </c:if>
+						</c:forEach>
+				    </tbody>
+				</table><!-- /.table-responsive -->
+				
+				<!-- Pagination 시작 -->
+				<!-- <div class='pull-right'> -->
+				<div class="text-center">
+					<ul class="pagination pagination-sm">
+						<!-- 페이징 버튼 클릭 시, jQuery로 페이지 번호를 전달하도록 a 태그에 전달된 pagingCreator 객체의 필드 지정 -->
+						 <c:if test="${pagingCreator.prev}"> <!-- true면 아래를 표시 -->
+							 <li class="paginate_button previous">
+							 	<a href="1">&laquo;</a><!-- 맨 앞으로 -->
+							 </li>
+						 </c:if>
+						 <c:if test="${pagingCreator.prev}">
+							 <li class="paginate_button previous">
+							 	<a href="${pagingCreator.startPagingNum - 1}">이전</a>
+							 </li>
+						 </c:if>
+						 <c:forEach var="pageNum" begin="${pagingCreator.startPagingNum}" end="${pagingCreator.endPagingNum}">
+							 <!-- 선택된 숫자의 경우, Bootstrap의 active 클래스 이름 추가 -->
+							 <li class="paginate_button">
+								 <li class='paginate_button ${pagingCreator.myBoardPagingDTO.pageNum == pageNum ? "active":"" }'>
+								 <a href="${pageNum}">${pageNum}</a>
+							 </li>
+						 </c:forEach>
+						 <c:if test="${pagingCreator.next}">
+							 <li class="paginate_button next">
+							 	<a href="${pagingCreator.endPagingNum +1}">다음</a>
+							 </li>
+						 </c:if>
+						 <%-- 맨 마지막으로 --%>
+						 <c:if test="${pagingCreator.next}">
+							 <li class="paginate_button next">
+							 	<a href="${pagingCreator.lastPageNum}">&raquo;</a>
+							 </li>
+						 </c:if> 
+					</ul>
+				</div><!-- Pagination 끝 -->
+            </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+    </div><!-- /.col-lg-12 -->
+</div><!-- /.row -->
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 
 
 <script>
 
 <%--//새글 등록 버튼 클릭 이벤트 처리: 게시물 등록 화면 이동////////////////////////////////// --%>
+<<<<<<< HEAD
 <%-- //11장 등록버튼 클리 시, 새 게시물 등록페이지 호출 --%>
 $("#btnMoveRegister").on("click", function(){
     self.location = "${contextPath}/myboard/register";
@@ -148,6 +296,12 @@ $("#btnMoveRegister").on("click", function(){
 
 
 
+=======
+$("#btnMoveRegister").on("click", function(){
+	self.location = "${contextPath}/myboard/register";
+})
+
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 <%--//게시물 행이나 제목 클릭 이벤트 처리: 게시물 상세 화면 이동//////////////////////////////// --%>
 var frmSendValue = $("#frmSendValue");
 
@@ -168,6 +322,7 @@ $(".moveDetail").on( "click", function(e) {
 });
 
 
+<<<<<<< HEAD
 <%-- (11장: 모달 호출 및 모달을 통한 페이지 이동 문제해결) JQeury 메소드 --%>
 
 //모달을 통한 뒤로가기 비활성화 코드
@@ -254,10 +409,58 @@ $(".paginate_button a").on( "click", function(e) {
 //모달 표시 유무 결정/모달에 표시할 내용 수정/모달 표시 실행
 $(document).ready(function() {
 	
+=======
+
+<%-- (11장: 모달 호출 및 모달을 통한 페이지 이동 문제해결) JQeury 메소드 --%>
+<%-- //모달을 통한 뒤로가기 비활성화 코드
+
+//popstate 이벤트를 처리하는 리스너 추가
+window.addEventListener('popstate', function(event){
+	history.pushState(null, null, location.href); //다시 push함으로 뒤로가기 Block
+})
+
+//컨트롤러가 전달한 result값을 변수에 저장
+var result='<c:out value="${result}"/>';
+
+function checkModal(result){
+	if(result==="|| history.state){
+		return;
+	}else if(result ==='successModify'){
+		var myMsg="글이 수정되었습니다.";
+	}else if(result ==='successRemove'){
+		var myMsg="글이 삭제되었습니다.";
+	}else if(parseInt(result)>0){
+		var myMsg="게시글"+parseInt(result)+"번이 등록 되었습니다.";
+	}
+	$(".modal-body").html(myMsg);
+	$("#myModal").modal("show");
+	myMsg=";
+} --%>
+
+
+//페이징 버튼 클릭 이벤트 처리: 폼에 저장된 페이지번호를 클릭한 페이지번호로 변경한 후 전송
+//페이지 화면 이동
+$(".paginate_button a").on( "click", function(e) {
+	
+	 e.preventDefault(); //a 태그의 동작 막음
+	 alert("페이징번호 클릭함");
+	 
+	 //폼에 저장된 현재 화면의 페이지번호를 클릭한 페이징 버튼의 페이지번호로 변경
+	 frmSendValue.find("input[name='pageNum']").val($(this).attr("href"));
+	 frmSendValue.attr("action", "${contextPath}/myboard/list");
+	 frmSendValue.attr("method", "get");
+	 
+	 frmSendValue.submit();
+});
+
+/* //모달 표시 유무 결정/모달에 표시할 내용 수정/모달 표시 실행
+$(document).ready(function(){
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 	//아래에 선언된 메소드 실행
 	checkModal(result);
 	
 	//현재 목록페이지 URL을 강제로 최근URL로 히스토리 객체에 추가
+<<<<<<< HEAD
 	history.pushState(null, null, location.href);
 });
 
@@ -267,6 +470,46 @@ $(document).ready(function() {
 
 
 
+=======
+	history.pushState(null, null, locatioin.href);
+}) */
+
+
+//표시행수 변경 이벤트 처리
+$("#selectAmount").on("change", function(){
+	 frmSendValue.find("input[name='pageNum']").val(1);
+	 frmSendValue.attr("action", "${contextPath}/myboard/list");
+	 frmSendValue.attr("method", "get");
+	 frmSendValue.submit();
+});
+
+//검색버튼 클릭 이벤트 처리
+$("#btnSearchGo").on("click", function(e) {
+	if (!$("#selectScope").find("option:selected").val()) {
+		 alert("검색범위를 선택하세요");
+		 return false;
+ 	}
+	if (!frmSendValue.find("input[name='keyword']").val()) {
+		 alert("검색어를 입력하세요");
+		 return false;
+	 }
+	 frmSendValue.find("input[name='pageNum']").val("1");
+	 //e.preventDefault();
+	 frmSendValue.submit();
+});
+
+//검색초기화 버튼 이벤트처리
+$("#btnReset").on("click", function(){
+	 $("#selectAmount").val(10);
+	 $("#selectScope").val("");
+	 $("#inputKeyword").val("") ;
+	 $("#hiddenPageNum").val(1);
+	 $("#hiddenLastPageNum").val(""); 
+	 frmSendValue.submit();
+}); 
+
+</script>
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 
 
 <%@ include file="../myinclude/myfooter.jsp" %> 

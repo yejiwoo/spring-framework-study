@@ -30,7 +30,7 @@ public class MyBoardControllerTests {
 	@Setter(onMethod_ = { @Autowired })
 	private WebApplicationContext ctx;
 
-	private MockMvc mockMvc;
+	private MockMvc mockMvc; // 가상 MVC 환경
 
 	@Before
 	public void setup() {
@@ -38,7 +38,7 @@ public class MyBoardControllerTests {
 	}
 //테스트 환경 구성-끝
 	
-	//게시물 목록 조회 테스트 
+//	//게시물 목록 조회 테스트 
 	@Test
 	public void testShowBoardList() throws Exception {
 	
@@ -61,7 +61,7 @@ public class MyBoardControllerTests {
 //	}
 //	
 //	
-//	//게시물 등록 처리 테스트
+	//게시물 등록 - 처리 테스트
 //	@Test
 //	public void testRegisterNewBoard() throws Exception {
 //

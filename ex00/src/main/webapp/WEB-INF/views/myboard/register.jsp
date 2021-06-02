@@ -36,7 +36,11 @@
 
     <button type="submit" class="btn btn-primary">등록</button>
     <button type="button" data-oper="list" class="btn btn-warning" 
+<<<<<<< HEAD
             onClick="alert('글등록이 취소되었습니다..');location.href='${contextPath}/myboard/list'">취소</button>
+=======
+            onClick="location.href='${contextPath}/myboard/list'">취소</button>
+>>>>>>> 26dd8fef8f6f29ad2c5becec90b544226e48b820
 </form>
 
                 </div><!-- /.panel-body -->

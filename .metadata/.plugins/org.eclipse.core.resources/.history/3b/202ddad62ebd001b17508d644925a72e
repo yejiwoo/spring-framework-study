@@ -1,5 +1,0 @@
-package org.zerock.ex00.mapper;
-
-public interface MyBoardMapper {
-
-}
