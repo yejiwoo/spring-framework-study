@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import org.zerock.ex00.common.paging.MyReplyPagingDTO;
+//import org.zerock.ex00.common.paging.MyReplyPagingDTO;
 import org.zerock.ex00.domain.MyReplyVO;
 
 import lombok.Setter;
@@ -24,14 +24,14 @@ public class MyReplyMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private MyReplyMapper myReplyMapper;
 	
-//	//매퍼인스턴스 생성 테스트
-//	@Test
-//	public void testMapper() {
-//
-//		log.info(myReplyMapper);
-//	}
-//
-//	//특정 게시물에 대한 댓글 목록 조회 테스트
+	//매퍼인스턴스 생성 테스트
+	@Test
+	public void testMapper() {
+
+		log.info(myReplyMapper);
+	}
+
+	//특정 게시물에 대한 댓글 목록 조회 테스트
 //	@Test
 //	public void testSelectMyReplyList() {
 //
@@ -42,7 +42,8 @@ public class MyReplyMapperTests {
 //		myReplies.forEach(myReply -> System.out.println(myReply));
 //
 //	}
-//	//특정 게시물에 대한 댓글 목록 조회(페이징) 테스트
+	
+//특정 게시물에 대한 댓글 목록 조회(페이징) 테스트
 @Test
 public void testSelectMyReplyListPaging() {
 

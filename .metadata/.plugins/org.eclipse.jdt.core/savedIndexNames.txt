@@ -94,7 +94,6 @@ INDEX VERSION 1.131+C:\myJavaDev\mySpring5-workspace\.metadata\.plugins\org.ecli
 1931730593.index
 2194297887.index
 124951269.index
-1309588450.index
 4241739926.index
 4188617322.index
 3090583398.index

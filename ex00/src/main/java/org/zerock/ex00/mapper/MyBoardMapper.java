@@ -40,6 +40,7 @@ public interface MyBoardMapper {
 	//게시물 수정
 	public int updateMyBoard(MyBoardVO myBoard);
 	
-
+	//게시물 댓글 수 증가
+	public void updateBReplyCnt(Long bno, int n);
 	
 }

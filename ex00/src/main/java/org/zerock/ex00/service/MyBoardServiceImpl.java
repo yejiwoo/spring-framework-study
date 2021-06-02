@@ -30,7 +30,7 @@ public class MyBoardServiceImpl implements MyBoardService {
 //		return myBoardMapper.selectMyBoardList();
 //	}
 	
-	//게시물 목록 조회 서비스 2
+	//게시물 목록 조회 서비스 2 - 페이징 고려
 	@Override
 	public List<MyBoardVO> getBoardList(MyBoardPagingDTO myBoardPagingDTO){
 		log.info("MyBoardService.getBoardList() 실행");

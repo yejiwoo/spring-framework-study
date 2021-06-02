@@ -104,52 +104,82 @@ public class MyBoardController {
     
     //게시물 수정 처리
     @PostMapping("/modify")
-    public String modifyBoard(MyBoardVO myBoard, RedirectAttributes redirectAttr){
+    public String modifyBoard(MyBoardVO myBoard, 
+    		MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+    		RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+
         log.info("컨트롤러 - 게시물 수정 전달된 myBoard 값: " + myBoard);
-        
+        log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
+        if (myBoardService.modifyBoard(myBoard)) {
+        	redirectAttr.addFlashAttribute("result", "success");
+        }
         redirectAttr.addAttribute("bno", myBoard.getBno());
-        
+        redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+        redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+        redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+        redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
         return "redirect:/myboard/detail";
     }
     
-    //게시물 삭제 - 실제 삭제는 않됨
+  //게시물 삭제 - By 사용자: 실제 삭제는 안됨
+    @Override
     @PostMapping("/delete")
     public String setBoardDeleted(@RequestParam("bno") Long bno,
-                                  MyBoardVO myBoard,  
-                                  RedirectAttributes redirectAttr ){ 
-        log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
-    	log.info("컨트롤러 - 게시물 삭제(전달된 MyBoardVO): " + myBoard);
-        
-        if (myBoardService.setBoardDeleted(myBoard.getBno())) {
-            redirectAttr.addFlashAttribute("result", "successDelete");
-        }
-        
-        return "redirect:/myboard/list";
-        
-    }
+	    MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+	    RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+    	
+	    log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
+	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
+	
+	    if (myBoardService.setBoardDeleted(bno)) {
+	    	redirectAttr.addFlashAttribute("result", "success");
+	    }
+	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
+	    return "redirect:/myboard/list";
+    } 
+
     
-    //게시물 삭제 - 특정 게시물 삭제 : 실제 삭제 발생
+    
+  //게시물 삭제 - 특정 게시물 삭제 By 관리자: 실제 삭제 발생
     @PostMapping("/remove")
     public String removeBoard(@RequestParam("bno") Long bno,
-    		                  RedirectAttributes redirectAttr ){
-        log.info("컨트롤러 - 게시물 삭제: 삭제되는 글번호: " + bno);
-        
-        if (myBoardService.removeBoard(bno)) {
-        	
-            redirectAttr.addFlashAttribute("result", "successRemove");
-        }
-        
-        return "redirect:/myboard/list";
-    }
+						    MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+						    RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+	    log.info("컨트롤러 - 게시물 삭제: 삭제되는 글번호: " + bno);
+	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
 	
-    //게시물 삭제 - 삭제 설정된 모든 게시물 삭제  - By 관리자: 실제 삭제 발생
-    @PostMapping("/removeAll")
-    public String removeAllDeletedBoard(RedirectAttributes redirectAttr) {
-        //삭제된 행수를 removedRowCnt 이름으로 반환
-        redirectAttr.addFlashAttribute("removedRowCnt", myBoardService.removeAllDeletedBoard());
-        log.info("관리자에 의해 삭제된 총 행수: " + redirectAttr.getAttribute("removedRowCnt"));
-       
-        return "redirect:/myboard/list";
+	    if (myBoardService.removeBoard(bno)) {
+	    	redirectAttr.addFlashAttribute("result", "success");
+	    }
+	
+	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
+	
+	    return "redirect:/myboard/list";
     }
+    
+    //게시물 삭제 – 삭제 설정된 모든 게시물 삭제 - By 관리자: 실제 삭제 발생
+    @PostMapping("/removeAll")
+    public String removeAllDeletedBoard(MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+    			RedirectAttributes redirectAttr) {//전달할 페이징 값을 저장하는 객체
+
+	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);
+	    //삭제된 행수를 removedRowCnt 이름으로 반환
+	    redirectAttr.addFlashAttribute("removedRowCnt", myBoardService.removeAllDeletedBoard());
+	
+	    log.info("관리자에 의해 삭제된 총 행수: " + redirectAttr.getAttribute("removedRowCnt"));
+	
+	    redirectAttr.addAttribute("pageNum", myBoardPagingDTO.getPageNum());
+	    redirectAttr.addAttribute("rowAmountPerPage", myBoardPagingDTO.getRowAmountPerPage());
+	    redirectAttr.addAttribute("scope", myBoardPagingDTO.getScope());
+	    redirectAttr.addAttribute("keyword", myBoardPagingDTO.getKeyword());
+	    return "redirect:/myboard/list";
+    } 
+
     
 }
