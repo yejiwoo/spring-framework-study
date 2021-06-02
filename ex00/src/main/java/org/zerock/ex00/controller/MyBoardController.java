@@ -122,11 +122,10 @@ public class MyBoardController {
     }
     
   //게시물 삭제 - By 사용자: 실제 삭제는 안됨
-    @Override
     @PostMapping("/delete")
     public String setBoardDeleted(@RequestParam("bno") Long bno,
-	    MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
-	    RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
+    		MyBoardPagingDTO myBoardPagingDTO,//전달된 페이징 값들을 받음
+    		RedirectAttributes redirectAttr){ //전달할 페이징 값을 저장하는 객체
     	
 	    log.info("컨트롤러 - 게시물 삭제(bdelFlag값변경 글번호): " + bno);
 	    log.info("컨트롤러 - 전달된 MyBoardPagingDTO: "+ myBoardPagingDTO);

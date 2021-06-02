@@ -2,8 +2,10 @@ package org.zerock.ex00.common.paging;
 
 import lombok.Getter;
 import lombok.ToString;
+
 @Getter
 @ToString
+//웹 브라우저에서 전달한 페이징 값들이 저장되는 클래스
 public class MyBoardPagingCreatorDTO {
 
 	private MyBoardPagingDTO myBoardPagingDTO; //페이지번호와 행 개수 저장 객체
