@@ -13,8 +13,24 @@ public interface MyBoardMapper {
 	public Integer insertMyBoard(MyBoardVO myBoard);
 	
 	//게시물 등록2 - selectKey 이용
-	public Integer insertMyBOardSelectKey(MyBoardVO myBoard);
+	public Integer insertMyBoardSelectKey(MyBoardVO myBoard);
 	
-	//게시물 조회
-	public MyBoardVO
+	//게시물 조회 - 게시물 1개
+	public MyBoardVO selectMyBoard(Long bno);
+	
+	//게시물 수정
+	public int updateMyBoard(MyBoardVO myBoard);
+	
+	//게시물 삭제 - 해당 글의 bdelFlag를 1로 수정
+	public int updateBdelFlag(Long bno);
+	
+	//게시물 삭제 - 실제 삭제
+	public int deleteMyBoard(Long bno);
+	
+	//게시물 삭제(관리자) - 사용자 삭제 요청된 게시물 전체 삭제
+	public int deleteAllBoardSetDeleted();
+	
+	
+	//게시물 조회수 증가
+	public void updateBviewsCnt(Long bno);
 }

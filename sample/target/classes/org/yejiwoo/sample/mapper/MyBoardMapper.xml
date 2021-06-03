@@ -7,6 +7,7 @@
  <mapper namespace="org.yejiwoo.sample.mapper.MyBoardMapper">
  
 <!-- 각 태그의 id에 설정하는 값은, 이 SQL문을 사용하는 메퍼-인터페이스의 해당 메소드 이름과 동일해야 함 -->
+<!-- insert/update/delete문은 삽입된/수정된/삭제된 행의 개수 반환 -->
 
 <!-- 게시물 조회 - 목록 -->
  <select id="selectMyBoardList" resultType="org.yejiwoo.sample.domain.MyBoardVO">
@@ -14,4 +15,77 @@
  	WHERE bno > 0 AND bdelFlag=0
  	ORDER BY bno DESC
  </select>
+ 
+<!-- 게시물 등록1 - selectKey 이용 안 함 -->
+<insert id="insertMyBoard">
+	INSERT INTO book_ex.tbl_myboard
+	VALUES(seq_myboard.nextval, #{btitle}, #{bcontent}, #{bwriter},
+		DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+</insert>
+
+<!-- 게시물 등록2 - selectKey 이용 -->
+
+<!-- select key 엘리먼트 속성 -->
+<!-- keyProperty: selectKey구문의 결과가 셋팅될 대상 프로퍼티.
+	keyColumn: 리턴되는 결과셋의 칼럼명은 프로퍼티에 일치한다. 여러개의 칼럼을 사용한다면 칼럼명의 목록은 콤마를 사용해서 구분한다.
+	resultType: 결과의 타입. 마이바티스는 이 기능을 제거할 수 있지만 추가하는게 문제가 되지는 않을것이다. 마이바티스는 String을 포함하여 키로 사용될 수 있는 간단한 타입을 허용한다.
+	order: BEFORE 또는 AFTER를 셋팅할 수 있다. BEFORE로 설정하면 키를 먼저 조회하고 그 값을 keyProperty 에 셋팅한 뒤 insert 구문을 실행한다. AFTER로 설정하면 insert 구문을 실행한 뒤 selectKey 구문을 실행한다. 오라클과 같은 데이터베이스에서는 insert구문 내부에서 일관된 호출형태로 처리한다.
+	statementType: STATEMENT, PREPARED 또는 CALLABLE중 하나를 선택할 수 있다. 마이바티스에게 Statement, PreparedStatement 또는 CallableStatement를 사용하게 한다. 디폴트는 PREPARED 이다. -->
+<!-- selectKey가 사용되는 사례 -->
+<!-- AUTO_INCREMENT가 적용되지 않은 테이블에 id를 계산해서 넣고 싶은 경우
+	AUTO_INCREMENT가 적용된 테이블에 삽입된 데이터의 id를 바로 조회하여 바로 다른 테이블에 삽입하고 싶은 경우 -->
+<insert id="insertMyBoardSelectKey">
+	<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+		SELECT book_ex.seq_myboard.nextval FROM dual
+	</selectKey>
+	INSERT INTO book_ex.tbl_myboard
+	VALUES (#{bno}, #{btitle}, #{bcontent}, #{bwriter},
+		DEFAULT, DEFAULT, DEFAUL, DEFAULT, DEFAULT)
+</insert>
+
+<!--  게시물 조회 -->
+<select id="selectMyBoard" resultType="org.yejiwoo.sample.domain.MyBoardVO">
+	SELECT * FROM book_ex.tbl_myboard
+	WHERE bno=#{bno} <!-- AND bdelFlag=0 -->
+</select>
+
+<!-- 게시물 수정 -->
+<update id="updateMyBoard">
+	UPDATE book_ex.tbl_myboard
+	SET btitle=#{btitle},
+		bcontent=#{bcontent},
+		bmodDate=DEFAULT
+	WHERE bno=#{bno}
+</update>
+
+<!-- 게시물 삭제 - 해당 글의 bdelFlag 1로 수정 -->
+<update id="updateBdelFlag">
+	UPDATE book_ex.tbl_myboard
+	SET bdelFlag=1
+	WHERE bno=#{bno}
+</update>
+
+<!-- 게시물 삭제 - 실제 삭제 -->
+<delete id="deleteMyBoard">
+	DELETE book_ex.tbl_myboard WHERE bno=#{bno}
+</delete>
+
+<!-- 게시물 삭제(관리자) - 사용자 삭제 요청된 게시물 전체 삭제 -->
+<delete id="deleteAllBoardSetDeleted">
+	DELETE book_ex.tbl_myboard WHERE bdelFlag=1
+</delete>
+
+<!-- 게시물 조회수 증가 -->
+<update id="updateBviewsCnt">
+	UPDATE book_ex.tbl_myboard
+	SET bviewsCnt=bviewsCnt+1
+	WHERE bno=#{bno}
+</update>
+
+<!-- 게시물의 댓글 개수 수정: 댓글추가 시 +1, 삭제 시 -1 -->
+<update id="updateBReplyCnt">
+	UPDATE book_Ex.tbl_myboard
+	SET breplyCnt = breplyCnt+#{amount}
+	WHERE bno=#{bno}
+</update>
  </mapper>
