@@ -1,6 +1,7 @@
 package org.zerock.ex00.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.ex00.common.paging.MyReplyPagingCreatorDTO;
 import org.zerock.ex00.common.paging.MyReplyPagingDTO;
 import org.zerock.ex00.domain.MyReplyVO;
@@ -47,12 +48,15 @@ public class MyReplyServiceImpl implements MyReplyService{
 //	}
 	
 	 //특정 게시물에 대한 댓글 등록: rno 반환
+	@Transactional
 	@Override
 	public long registerReplyForBoard(MyReplyVO myReply) { 
 	 
 	  log.info("댓글-서비스-게시물에 대한 댓글 등록 시 처음 전달된 myReplyVO: " + myReply);
+	  
 	  //게시물 댓글 수 증가
 	  myBoardMapper.updateBReplyCnt(myReply.getBno(),  1);
+	  
 	  //게시물에 대한 댓글 등록 처리
 	  myReplyMapper.insertMyReplyForBoard(myReply);
 	  log.info("댓글-서비스 - 게시물에 대한 댓글 등록: 등록된 myReply: " + myReply);
@@ -63,15 +67,15 @@ public class MyReplyServiceImpl implements MyReplyService{
 	  }
 	
 	  //특정 게시물에 대한 댓글의 댓글 등록: rno 반환
-	  //@Transactional  
+	  @Transactional  
 	  @Override
 	  public long registerReplyForReply(MyReplyVO myReply) { 
 	 
 	  log.info("댓글-서비스-게시물에 대한 댓글 등록 시 myReplyVO: " + myReply);
+	  
 	  //게시물 댓글 수 증가
 	  myBoardMapper.updateBReplyCnt(myReply.getBno(),  1);
-	  //게시물에 대한 댓글 등록 처리
-	  myReplyMapper.insertMyReplyForBoard(myReply);    
+	    
 	  //게시물의 댓글에 대한 댓글 등록 처리
 	  myReplyMapper.insertMyReplyForReply(myReply);
 	  log.info("댓글-서비스 - 댓글에 대한 댓글 등록: 등록된 myReply: " + myReply);
@@ -106,7 +110,7 @@ public class MyReplyServiceImpl implements MyReplyService{
 	 } 
 	 
 	 //특정 게시물에 대한 특정 댓글 삭제: 삭제된 행수(1) 반환
-	  //@Transactional
+	  @Transactional
 	  @Override
 	  public int removeReply(long bno, long rno) { 
 	 

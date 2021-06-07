@@ -106,7 +106,9 @@
  										<c:if test="${board.bdelFlag == 0}">
  											 <tr class="moveDetail" data-bno='<c:out value="${board.bno}"/>'> 
  												<td><c:out value="${board.bno}" /></td>
- 												<td style="text-align:left;"><c:out value="${board.btitle}" /></td>
+ 												<td style="text-align:left;"><c:out value="${board.btitle}" />
+ 												<small>[댓글수: <strong><c:out value="${board.breplyCnt}"/></strong>]</small>
+ 												</td>
  												<td><c:out value="${board.bwriter}" /></td>
  												<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.bregDate}" /><br>
  													<%-- ${board.bregDate} --%>

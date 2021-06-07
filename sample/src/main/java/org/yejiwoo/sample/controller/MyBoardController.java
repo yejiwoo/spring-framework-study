@@ -23,6 +23,12 @@ public class MyBoardController {
 	public void showBoardList(Model model) {
 		log.info("컨트롤러 - 게시물 목록 조회....");
 		model.addAttribute("boardList",myboardService.getBoardList());
+		//return 값이 없으므로 호출경로(/myboard/list)와 같은 폴더의 파일이 실행된다.
+	}
+	
+	@GetMapping("/tables")
+	public void showTables(Model model) {
+		
 	}
 	
 	

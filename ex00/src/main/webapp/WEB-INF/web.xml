@@ -30,6 +30,7 @@
     <!--<servlet-name>appServlet</servlet-name> -->
     </filter-mapping>
     
+    
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
@@ -56,6 +57,15 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 파일 업로드 관련 추가 내용 -->
+		<multipart-config>
+			<location>C:\\upload\\temp</location>  <!--  앞에서 생성한 디렉토리 패스를 설정합니다.-->
+			<max-file-size>20971520</max-file-size> <!--1MB * 20 -->
+			<max-request-size>41943040</max-request-size><!-- 40MB -->
+			<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
+		</multipart-config>
+		<!-- 파일 업로드 관련 추가 내용 끝 --> 
+		
 	</servlet>
 		
 	<servlet-mapping>

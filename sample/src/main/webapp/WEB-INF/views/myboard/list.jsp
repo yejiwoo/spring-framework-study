@@ -7,12 +7,12 @@
 <%-- <c:set> 태그 이용해 pageContext 내장 객체의 컨텍스트 이름을 변수 contextPath에 미리 설정 --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 
-<%@include file="../myinclude/myfooter.jsp" %>
+<%@include file="../myinclude/myheader.jsp" %>
 
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header">Bard - List</h3>
+                    <h3 class="page-header">Board - List</h3>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
