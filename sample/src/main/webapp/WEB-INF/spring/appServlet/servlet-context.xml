@@ -24,6 +24,6 @@
 <!-- 	<context:component-scan base-package="org.yejiwoo.sample" /> -->
 	<context:component-scan base-package="org.yejiwoo.sample.service" />
 	<context:component-scan base-package="org.yejiwoo.sample.controller" />
-	
+	 
 	
 </beans:beans>

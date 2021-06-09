@@ -2,4 +2,5 @@
 <aop-reference-model>
 <aop-project name="sample"/>
 <aop-project name="ex00"/>
+<aop-project name="RentSpace"/>
 </aop-reference-model>

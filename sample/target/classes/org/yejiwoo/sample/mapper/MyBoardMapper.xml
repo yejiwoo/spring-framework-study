@@ -40,7 +40,7 @@
 	</selectKey>
 	INSERT INTO book_ex.tbl_myboard
 	VALUES (#{bno}, #{btitle}, #{bcontent}, #{bwriter},
-		DEFAULT, DEFAULT, DEFAUL, DEFAULT, DEFAULT)
+		DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 </insert>
 
 <!--  게시물 조회 -->

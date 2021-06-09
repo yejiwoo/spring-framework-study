@@ -66,7 +66,6 @@
 </head>
 
 <body id="me">
-
     <div id="wrapper">
 
         <!-- Navigation -->
