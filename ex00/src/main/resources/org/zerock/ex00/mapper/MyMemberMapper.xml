@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.zerock.ex00.mapper.MyMemberMapper"> <!-- 패키지 명이 포함된 인터페이스 이름을 설정 -->
+
+	<resultMap id="authorityMap" type="org.zerock.ex00.domain.MyAuthorityVO">
+		<result property="userid" column="userid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+
+	<resultMap id="memberMap" type="org.zerock.ex00.domain.MyMemberVO">
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="userName" column="userName"/>
+		<result property="mregDate" column="mregDate"/>
+		<result property="mmodDate" column="mmodDate"/>
+		<result property="mdropFlag" column="mdropFlag"/>
+		<result property="enabled" column="enabled"/>
+		
+		<!-- property: MyMemberVO의 속성명, 
+			resultMap: 반환되는 레코드가 저장될 결과물의 이름 -->
+		<collection property="authorityList" resultMap="authorityMap"/> 
+	</resultMap>
+
+	<!-- 특정 회원 조회(스프링 시큐리티도 사용함) - OUTER JOIN 을 사용할 이유가 없습니다. -->
+	<select id="selectMyMember" resultMap="memberMap">
+	<![CDATA[
+		SELECT mem.userid, mem.userpw, mem.username, mem.enabled,
+			mem.mregdate, mem.mmodDate, mem.mdropFlag, auth.authority
+		FROM book_ex.tbl_mymember mem
+				INNER JOIN book_ex.tbl_mymember_authorities auth
+					ON mem.userid=auth.userid
+		WHERE mem.userid=#{userid}
+	]]>
+	</select>
+	
+	<!-- 회원 등록: 회원 등록 시 회원 권한 추가도 같이 수행 -->
+	<insert id="insertMyMember">
+		INSERT INTO book_ex.tbl_mymember
+		VALUES(#{userid}, #{userpw}, #{userName}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<!-- 회원 권한 추가 -->
+	<insert id="insertMyMemAuthority">
+		INSERT INTO book_ex.tbl_mymember_authorities
+		VALUES(#{userid}, #{authority})
+	</insert>
+</mapper>

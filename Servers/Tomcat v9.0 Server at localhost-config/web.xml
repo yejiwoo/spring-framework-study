@@ -626,7 +626,7 @@
   <!-- created sessions by modifying the value below.                       -->
 
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>30</session-timeout> <!-- 분 단위 (세션이 30분 동안만 유지 됨) -->
     </session-config>
 
 
